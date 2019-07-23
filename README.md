@@ -1,3 +1,3 @@
-# python_project
+# pendulum
 
 It is mathematical pendulum using puython-Tkinter
