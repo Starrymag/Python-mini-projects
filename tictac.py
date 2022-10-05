@@ -1,3 +1,4 @@
+from cgi import test
 import tkinter as tk
 
 WIDTH, HEIGHT = 605, 605
@@ -21,6 +22,9 @@ class Game:
         self.current_move = True
         self.display = {True: "X", False: "0"}
         self.flag = False
+        self.var = tk.IntVar()
+        self.button = tk.Button(self.window, text="restart", command=lambda: self.var.set(1))
+        self.button.pack(side="right")
 
 
     def click_handler(self, event):
@@ -35,6 +39,17 @@ class Game:
 
     def input_motion(self):
         self.window.bind("<Button-1>", self.click_handler)
+
+
+    def input_restar(self):
+        print("waiting...")
+        self.button.wait_variable(self.var)
+        self.field = [[" ", " ", " "],
+                      [" ", " ", " "],
+                      [" ", " ", " "]]
+        self.flag = False
+        self.canvas.delete("all") 
+        print("NEW GAME")
 
 
     def proccesing(self):
@@ -101,7 +116,7 @@ class Game:
             self.window.update_idletasks()
             self.window.update()
             if self.flag:
-                break
+                self.input_restar()
                 
 
 
