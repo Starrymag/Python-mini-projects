@@ -20,6 +20,7 @@ class Game:
         self.canvas.pack(side="left")
         self.current_move = True
         self.display = {True: "X", False: "0"}
+        self.flag = False
 
 
     def click_handler(self, event):
@@ -30,7 +31,6 @@ class Game:
         if self.field[y_coord][x_coord] == " ":
             self.field[y_coord][x_coord] = self.display[self.current_move]
             self.current_move = not(self.current_move)
-        # [print(x) for x in self.field]
 
 
     def input_motion(self):
@@ -42,6 +42,7 @@ class Game:
         for y_i in range(len(self.field)):
             if self.field[y_i] == ["X", "X", "X"] or self.field[y_i] == ["0", "0", "0"]:
                 print("END OF THE GAME")
+                self.flag = True
          
         # check columns
         for i in range(3):
@@ -50,6 +51,7 @@ class Game:
                 tmp_store.append(self.field[y_i][i])
             if tmp_store == ["X", "X", "X"] or tmp_store == ["0", "0", "0"]:
                 print("END OF THE GAME")
+                self.flag = True
 
         # check diagoanl
         tmp_store = []
@@ -59,6 +61,7 @@ class Game:
                     tmp_store.append(self.field[y_i][x_i])
         if tmp_store == ["X", "X", "X"] or tmp_store == ["0", "0", "0"]:
                 print("END OF THE GAME")
+                self.flag = True
 
         
         # check another diagoanl
@@ -69,6 +72,7 @@ class Game:
                     tmp_store.append(self.field[y_i][x_i])
         if tmp_store == ["X", "X", "X"] or tmp_store == ["0", "0", "0"]:
                 print("END OF THE GAME")
+                self.flag = True
 
 
     def draw(self):
@@ -96,6 +100,9 @@ class Game:
             self.proccesing()
             self.window.update_idletasks()
             self.window.update()
+            if self.flag:
+                break
+                
 
 
 
