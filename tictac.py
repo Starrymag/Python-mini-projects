@@ -1,4 +1,3 @@
-from cgi import test
 import tkinter as tk
 
 WIDTH, HEIGHT = 605, 605
@@ -23,8 +22,8 @@ class Game:
         self.display = {True: "X", False: "0"}
         self.flag = False
         self.var = tk.IntVar()
-        self.button = tk.Button(self.window, text="restart", command=lambda: self.var.set(1))
-        self.button.pack(side="right")
+        self.button = tk.Button(self.window, text="restart", command=self.restart_handler)
+        self.button.pack(side="right", padx=20)
 
 
     def click_handler(self, event):
@@ -36,6 +35,16 @@ class Game:
             self.field[y_coord][x_coord] = self.display[self.current_move]
             self.current_move = not(self.current_move)
 
+    
+    def restart_handler(self):
+        self.var.set(1)
+        self.field = [[" ", " ", " "],
+                      [" ", " ", " "],
+                      [" ", " ", " "]]
+        self.flag = False
+        self.canvas.delete("all") 
+        print("NEW GAME")
+
 
     def input_motion(self):
         self.window.bind("<Button-1>", self.click_handler)
@@ -44,12 +53,6 @@ class Game:
     def input_restar(self):
         print("waiting...")
         self.button.wait_variable(self.var)
-        self.field = [[" ", " ", " "],
-                      [" ", " ", " "],
-                      [" ", " ", " "]]
-        self.flag = False
-        self.canvas.delete("all") 
-        print("NEW GAME")
 
 
     def proccesing(self):
@@ -78,8 +81,7 @@ class Game:
                 print("END OF THE GAME")
                 self.flag = True
 
-        
-        # check another diagoanl
+        # check another diagonal
         tmp_store = []
         for x_i in range(3):
             for y_i in range(3):
